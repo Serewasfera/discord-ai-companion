@@ -1,0 +1,41 @@
+discord:
+  guild_id: 12345678901234567890 # ID сервера
+  main_channel_id: 12345678901234567890 # ID основного текстового канала
+  command_prefix: "ai! "
+  respond_to_mentions: true # Отвечать на @упоминания
+  respond_in_main_channel: true # Отвечать в основном канале
+
+llm:
+  base_url: "https://openrouter.ai/api/v1" # OpenAI-совместимый API шлюз
+  api_key_env: "LLM_API_KEY" # Не трогать
+  model: "deepseek/deepseek-v3.2"
+  temperature: 0.8
+  top_p: 0.95
+  frequency_penalty: 0.3
+  presence_penalty: 0.3
+  max_tokens: 800
+  history_size: 20 # Размер истории в сообщениях
+
+stt:
+  base_url: "http://127.0.0.1:8000/v1" # OpenAI
+  api_key_env: "STT_API_KEY" # Не трогать
+  model: "Systran/faster-whisper-medium"
+  language: "ru"
+
+tts:
+  base_url: "http://127.0.0.1:8080/v1" # OpenAI
+  api_key_env: "TTS_API_KEY" # Не трогать
+  model: "tts-1"
+  voice: "Sarah"
+  response_format: "opus"
+  speed: 1.0
+
+persona:
+  system_prompt_file: "persona/system_prompt.txt"
+  personality_file: "persona/personality.txt"
+  bot_name: "AI Ассистент" # Имя бота
+
+voice:
+  silence_threshold_ms: 800    # тишина для конца фразы
+  min_audio_length_ms: 400     # минимальная длина для отправки в STT
+  sample_rate: 48000
