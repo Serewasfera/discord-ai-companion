@@ -23,7 +23,17 @@ sudo apt-get install libopus0 opus-tools
 ```
 (или аналогичные этим команды)
 
-## Установка
+## Установка (Windows):
+
+1. Клонируйте репозиторий:  
+`git clone https://github.com/Serewasfera/discord-ai-companion.git`
+
+2. Выполните **"[!] Install.bat"**
+
+3. Запустите через **"[!] Launch.bat"**
+
+
+## Установка вручную
 
 1. Клонируйте репозиторий:  
 `git clone https://github.com/Serewasfera/discord-ai-companion.git`
@@ -36,7 +46,15 @@ cp .env.example .env (Linux)
 
 3. Отредактируйте **.env** (для API ключей) и **config.yaml** (конфиг всего)
 
-4. `pip install -r requirements.txt`
+4. Создайте и активируйте venv:
+```
+python -m venv venv
+
+venv\Scripts\activate.bat (Windows)
+source venv/bin/activate (Linux)
+```
+
+5. `pip install -r requirements.txt`
 
 6. Запустите через `python main.py`
 
