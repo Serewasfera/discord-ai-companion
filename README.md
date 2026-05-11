@@ -2,7 +2,7 @@
 
 ### [(Посмотреть демо)](https://files.catbox.moe/l4ij8n.mp4)
 
-Discord бот на основе ИИ для текстового и голосового чата, основанный на Discord.py
+Discord бот на основе ИИ для текстового и голосового чата, на базе Discord.py
 
 - Поддержка как текстового общения, так и голосового
 - Кастомизация личности и системного промпта
@@ -43,3 +43,9 @@ cp .env.example .env (Linux)
 ## Благодарности
 
 Спасибо [XASAPHS121](https://github.com/XASAPHS121) за **davey_compat.py**
+
+## Что я использовал для теста?
+
+**T2T**: DeepSeek v3.2
+**TTS**: [Supertonic 2](https://github.com/sameert89/supertonic-tts-openai)
+**STT**: [faster-whisper-server](https://github.com/speaches-ai/speaches) (теперь Speaches, модель faster-whisper-medium)
