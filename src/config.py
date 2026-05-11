@@ -28,6 +28,7 @@ class LLMCfg:
     presence_penalty: float
     max_tokens: int
     history_size: int
+    history_dir: str
 
 
 @dataclass
@@ -112,6 +113,7 @@ def load_config(path: str = "config.yaml") -> AppConfig:
             presence_penalty=l.get("presence_penalty", 0.0),
             max_tokens=l.get("max_tokens", 800),
             history_size=l.get("history_size", 20),
+            history_dir=l.get("history_dir", "data/history"),
         ),
         stt=STTCfg(
             base_url=s["base_url"],

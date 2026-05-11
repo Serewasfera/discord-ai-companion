@@ -55,7 +55,10 @@ from src.bot import create_bot
 def main():
     cfg = load_config("config.yaml")
     bot = create_bot(cfg)
-    bot.run(cfg.discord.token)
+    try:
+        bot.run(cfg.discord.token)
+    finally:
+        pass
 
 
 if __name__ == "__main__":

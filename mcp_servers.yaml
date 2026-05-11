@@ -1,0 +1,36 @@
+enabled: true
+
+call_timeout: 5
+
+max_iterations: 5
+
+servers:
+  desktop-commander:
+    enabled: true
+    command: "npx"
+    args:
+      - "-y"
+      - "@wonderwhy-er/desktop-commander@latest"
+    env: {}
+
+  fetch:
+    enabled: true
+    command: "uvx"
+    args:
+      - "mcp-server-fetch"
+    env: {}
+
+  time:
+    enabled: true
+    command: "uvx"
+    args:
+      - "mcp-server-time"
+      - "--local-timezone=Europe/Moscow"
+    env: {}
+
+  duckduckgo-search:
+    enabled: true
+    command: "uvx"
+    args:
+      - "duckduckgo-mcp-server"
+    env: {}

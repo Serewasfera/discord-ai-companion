@@ -8,13 +8,14 @@ discord:
 llm:
   base_url: "https://openrouter.ai/api/v1" # OpenAI-совместимый API шлюз
   api_key_env: "LLM_API_KEY" # Не трогать
-  model: "deepseek/deepseek-v3.2"
+  model: "openai/gpt-oss-120b"
   temperature: 0.8
   top_p: 0.95
   frequency_penalty: 0.3
   presence_penalty: 0.3
   max_tokens: 800
-  history_size: 20 # Размер истории в сообщениях
+  history_size: 30 # Размер истории в сообщениях
+  history_dir: "data/history"
 
 stt:
   base_url: "http://127.0.0.1:8000/v1" # OpenAI
@@ -33,7 +34,7 @@ tts:
 persona:
   system_prompt_file: "persona/system_prompt.txt"
   personality_file: "persona/personality.txt"
-  bot_name: "AI Ассистент" # Имя бота
+  bot_name: "AI Ассистент"
 
 voice:
   silence_threshold_ms: 800    # тишина для конца фразы

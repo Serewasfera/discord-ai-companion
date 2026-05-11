@@ -8,6 +8,7 @@ from .llm import LLMClient
 from .stt import STTClient
 from .tts import TTSClient
 from .voice import VoiceSession
+from .mcp_manager import MCPManager, load_mcp_config
 
 
 def create_bot(cfg: AppConfig) -> commands.Bot:
@@ -19,7 +20,10 @@ def create_bot(cfg: AppConfig) -> commands.Bot:
 
     bot = commands.Bot(command_prefix=cfg.discord.command_prefix, intents=intents)
 
-    llm = LLMClient(cfg.llm, cfg.persona)
+    mcp_cfg = load_mcp_config("mcp_servers.yaml")
+    mcp = MCPManager(mcp_cfg)
+
+    llm = LLMClient(cfg.llm, cfg.persona, mcp=mcp)
     stt = STTClient(cfg.stt)
     tts = TTSClient(cfg.tts)
 
@@ -30,6 +34,15 @@ def create_bot(cfg: AppConfig) -> commands.Bot:
         print(f"✅ Залогинились как {bot.user} ({bot.user.id})")
         guild = bot.get_guild(cfg.discord.guild_id)
         print(f"   Сервер: {guild.name if guild else 'НЕ НАЙДЕН'}")
+
+        try:
+            await mcp.start()
+        except Exception as e:
+            print(f"⚠️ MCP start error: {e}")
+
+    @bot.event
+    async def on_close():
+        await mcp.stop()
 
     @bot.event
     async def on_message(message: discord.Message):
@@ -156,5 +169,31 @@ def create_bot(cfg: AppConfig) -> commands.Bot:
             f"• repr: `{ds!r}`"
         )
         await ctx.reply(info)
+
+    @bot.command(name="tools", help="Список доступных MCP-инструментов")
+    async def tools_cmd(ctx: commands.Context):
+        if not mcp.has_tools:
+            await ctx.reply("Инструментов нет (MCP отключён или не запущен)")
+            return
+        lines = ["**🔧 Доступные инструменты:**"]
+        for name, (server, tool_name, meta) in mcp._tools.items():
+            desc = meta["description"][:80].replace("\n", " ")
+            lines.append(f"• `{name}` — {desc}")
+        text = "\n".join(lines)
+        if len(text) > 1900:
+            text = text[:1900] + "\n…"
+        await ctx.reply(text)
+
+    @bot.command(name="mcp_reload", help="Перезапустить MCP")
+    async def mcp_reload(ctx: commands.Context):
+        await ctx.reply("🔄 Перезапускаю MCP...")
+        try:
+            await mcp.stop()
+            new_cfg = load_mcp_config("mcp_servers.yaml")
+            mcp.cfg = new_cfg
+            await mcp.start()
+            await ctx.reply(f"✅ MCP перезапущен: {len(mcp._tools)} инструментов")
+        except Exception as e:
+            await ctx.reply(f"❌ Ошибка: {e}")
 
     return bot
